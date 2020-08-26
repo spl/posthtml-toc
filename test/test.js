@@ -7,7 +7,7 @@ const path = require('path')
 const posthtml = require('posthtml')
 const fixtures = path.join(__dirname, 'fixtures')
 
-test(`invalid 'options.selector' throws error`, (t) => {
+test(`invalid 'options.insert' throws error`, (t) => {
   invalidOptions(t, { insert: 5 }, `unexpected 'options.insert': 5`)
 })
 
