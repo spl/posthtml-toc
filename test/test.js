@@ -11,6 +11,23 @@ test(`invalid 'options.insert' throws error`, (t) => {
   invalidOptions(t, { insert: 5 }, `unexpected 'options.insert': 5`)
 })
 
+test(`invalid 'options.insert' with no keys throws error`, (t) => {
+  invalidOptions(t, { insert: {} }, `empty 'options.insert'`)
+})
+
+test(`invalid 'options.insert' with >1 key throws error`, (t) => {
+  invalidOptions(t, { insert: { after: 'h1', before: 'h2' } },
+    'too many keys in \'options.insert\': after,before')
+})
+
+test(`invalid 'options.insert' with invalid key throws error`, (t) => {
+  invalidOptions(t, { insert: { life: 42 } }, `unexpected 'options.insert' key: life`)
+})
+
+test(`invalid 'options.insert' with invalid valid throws error`, (t) => {
+  invalidOptions(t, { insert: { beforeChildren: undefined } }, `unexpected 'options.insert' value: undefined`)
+})
+
 test(`invalid 'options.title' throws error`, (t) => {
   invalidOptions(t, { title: null }, `unexpected 'options.title': null`)
 })

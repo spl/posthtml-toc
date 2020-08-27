@@ -24,13 +24,19 @@ module.exports = function (options = {}) {
     throw new PostHtmlTocError(`unexpected 'options.insert': ${insert}`)
   }
 
-  const inserts = Object.entries(insert)
+  const insertKeys = Object.keys(insert)
 
-  if (inserts.length !== 1) {
-    throw new PostHtmlTocError(`unexpected number of entries in 'options.insert': ${insert}`)
+  switch (insertKeys.length) {
+    case 1:
+      break
+    case 0:
+      throw new PostHtmlTocError(`empty 'options.insert'`)
+    default:
+      throw new PostHtmlTocError(`too many keys in 'options.insert': ${insertKeys}`)
   }
 
-  const [position, selector] = inserts[0]
+  const position = insertKeys[0]
+  const selector = insert[position]
 
   // Define a function (dynamically) to insert the TOC.
   //
@@ -77,12 +83,12 @@ module.exports = function (options = {}) {
         }
       default:
         // The `position` is unknown.
-        throw new PostHtmlTocError(`unexpected key (position) in 'options.insert': ${insert}`)
+        throw new PostHtmlTocError(`unexpected 'options.insert' key: ${position}`)
     }
   })()
 
   if (typeof selector !== 'string') {
-    throw new PostHtmlTocError(`unexpected value (selector) in 'options.insert': ${insert}`)
+    throw new PostHtmlTocError(`unexpected 'options.insert' value: ${selector}`)
   }
 
   if (typeof title !== 'string') {
